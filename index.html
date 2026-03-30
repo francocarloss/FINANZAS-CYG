@@ -440,7 +440,7 @@ html.dark .ev-nm{color:rgba(255,255,255,.68);}
    Usa el botón 💾 para descargar el archivo actualizado
    y luego súbelo a tu repositorio de GitHub.
 ══════════════════════════════════════════════════════ */
-const CODE_DATA = {"income":[{"id":"i1","name":"Quincena Carlos","amount":6485,"day":15,"icon":"💼"},{"id":"i2","name":"Compe 20-24","amount":1500,"day":22,"icon":"✅"},{"id":"i3","name":"Carlos Fin Mes","amount":6674.15,"day":30,"icon":"💼"},{"id":"i4","name":"Gaby Fin Mes","amount":9317,"day":30,"icon":"👩‍💼"}],"expenses":[{"id":"e1","name":"Casa","amount":2500,"day":2,"cat":"hogar","when":"Del 01 al 05"},{"id":"e2","name":"Servicios","amount":900,"day":2,"cat":"hogar","when":"Del 01 al 05"},{"id":"e3","name":"Bus","amount":550,"day":3,"cat":"transporte","when":"Del 01 al 05"},{"id":"e4","name":"Colegio","amount":710,"day":3,"cat":"educacion","when":"Del 01 al 05"},{"id":"e5","name":"Préstamo Banrural","amount":3680,"day":3,"cat":"deuda","when":"Del 01 al 05"},{"id":"e6","name":"Pris & Despensa","amount":2000,"day":4,"cat":"alimentacion","when":"Del 01 al 05"},{"id":"e7","name":"Universidad","amount":750,"day":4,"cat":"educacion","when":"Del 01 al 05"},{"id":"e8","name":"Gasolina","amount":400,"day":1,"cat":"transporte","when":"Semana 1"},{"id":"e9","name":"Gasolina","amount":400,"day":8,"cat":"transporte","when":"Semana 2"},{"id":"e10","name":"Gasolina","amount":400,"day":15,"cat":"transporte","when":"Semana 3"},{"id":"e11","name":"Gasolina","amount":400,"day":22,"cat":"transporte","when":"Semana 4"},{"id":"e12","name":"Mercado","amount":200,"day":1,"cat":"alimentacion","when":"Semana 1"},{"id":"e13","name":"Mercado","amount":200,"day":8,"cat":"alimentacion","when":"Semana 2"},{"id":"e14","name":"Mercado","amount":200,"day":15,"cat":"alimentacion","when":"Semana 3"},{"id":"e15","name":"Mercado","amount":200,"day":22,"cat":"alimentacion","when":"Semana 4"},{"id":"e16","name":"BAC (quincena)","amount":600,"day":15,"cat":"deuda","when":"Quincena día 15"},{"id":"e17","name":"BAC (fin de mes)","amount":600,"day":30,"cat":"deuda","when":"Fin de mes día 30"},{"id":"e18","name":"Préstamo Inter","amount":970,"day":16,"cat":"deuda","when":"Día 16"},{"id":"e19","name":"Tarjeta Inter","amount":2440,"day":16,"cat":"deuda","when":"Día 16"}]};
+const CODE_DATA = {"income":[{"id":"i1","name":"Quincena Carlos","amount":6485,"day":15,"icon":"💼"},{"id":"i2","name":"Compe 20-24","amount":1500,"day":22,"icon":"✅"},{"id":"i3","name":"Carlos Fin Mes","amount":6674.15,"day":1,"icon":"💼"},{"id":"i4","name":"Gaby Fin Mes","amount":9317,"day":1,"icon":"👩‍💼"}],"expenses":[{"id":"e1","name":"Casa","amount":2500,"day":2,"cat":"hogar","when":"Del 01 al 05"},{"id":"e2","name":"Servicios","amount":900,"day":2,"cat":"hogar","when":"Del 01 al 05"},{"id":"e3","name":"Bus","amount":550,"day":3,"cat":"transporte","when":"Del 01 al 05"},{"id":"e4","name":"Colegio","amount":710,"day":3,"cat":"educacion","when":"Del 01 al 05"},{"id":"e5","name":"Préstamo Banrural","amount":3680,"day":3,"cat":"deuda","when":"Del 01 al 05"},{"id":"e6","name":"Pris & Despensa","amount":2000,"day":4,"cat":"alimentacion","when":"Del 01 al 05"},{"id":"e7","name":"Universidad","amount":750,"day":4,"cat":"educacion","when":"Del 01 al 05"},{"id":"e8","name":"Gasolina","amount":400,"day":1,"cat":"transporte","when":"Semana 1"},{"id":"e9","name":"Gasolina","amount":400,"day":8,"cat":"transporte","when":"Semana 2"},{"id":"e10","name":"Gasolina","amount":400,"day":15,"cat":"transporte","when":"Semana 3"},{"id":"e11","name":"Gasolina","amount":400,"day":22,"cat":"transporte","when":"Semana 4"},{"id":"e12","name":"Mercado","amount":200,"day":1,"cat":"alimentacion","when":"Semana 1"},{"id":"e13","name":"Mercado","amount":200,"day":8,"cat":"alimentacion","when":"Semana 2"},{"id":"e14","name":"Mercado","amount":200,"day":15,"cat":"alimentacion","when":"Semana 3"},{"id":"e15","name":"Mercado","amount":200,"day":22,"cat":"alimentacion","when":"Semana 4"},{"id":"e16","name":"BAC (quincena)","amount":600,"day":15,"cat":"deuda","when":"Quincena día 15"},{"id":"e17","name":"BAC (fin de mes)","amount":600,"day":30,"cat":"deuda","when":"Fin de mes día 30"},{"id":"e18","name":"Préstamo Inter","amount":970,"day":16,"cat":"deuda","when":"Día 16"},{"id":"e19","name":"Tarjeta Inter","amount":2440,"day":16,"cat":"deuda","when":"Día 16"}]};
 
 /* ══ STATE ══ */
 const CAT={deuda:{color:'var(--deuda)',bg:'var(--deuda-bg)',icon:'🏦',label:'Préstamos/Deudas'},hogar:{color:'var(--hogar)',bg:'var(--hogar-bg)',icon:'🏠',label:'Hogar/Servicios'},alimentacion:{color:'var(--alim)',bg:'var(--alim-bg)',icon:'🛒',label:'Alimentación'},transporte:{color:'var(--trans)',bg:'var(--trans-bg)',icon:'⛽',label:'Transporte'},educacion:{color:'var(--educ)',bg:'var(--educ-bg)',icon:'🎓',label:'Educación'}};
@@ -450,8 +450,35 @@ const DW=62,DAYS=31;
 let DATA={income:[],expenses:[]},mType=null,mEditId=null,selIcon='💼';
 
 /* ══ STORAGE ══ */
-function loadData(){try{const s=localStorage.getItem('mf_v4');DATA=s?JSON.parse(s):JSON.parse(JSON.stringify(CODE_DATA));}catch(e){DATA=JSON.parse(JSON.stringify(CODE_DATA));}}
-function persist(){try{localStorage.setItem('mf_v4',JSON.stringify(DATA));}catch(e){}}
+function normalizeTxt(v){return (v||'').toString().normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();}
+function isEndMonthIncome(item){
+  const name=normalizeTxt(item&&item.name);
+  return /fin\s*(de)?\s*mes/.test(name) || (/cierre/.test(name) && /mes/.test(name));
+}
+function normalizeData(data){
+  const base=data&&typeof data==='object'?data:{};
+  const income=(base.income||[]).map(it=>{
+    const item={...it};
+    if(isEndMonthIncome(item) && Number(item.day)>=30)item.day=1;
+    return item;
+  });
+  const expenses=Array.isArray(base.expenses)?base.expenses:[...CODE_DATA.expenses];
+  return {income,expenses};
+}
+function loadData(){
+  try{
+    const s=localStorage.getItem('mf_v4');
+    DATA=normalizeData(s?JSON.parse(s):JSON.parse(JSON.stringify(CODE_DATA)));
+  }catch(e){
+    DATA=normalizeData(JSON.parse(JSON.stringify(CODE_DATA)));
+  }
+}
+function persist(){
+  try{
+    DATA=normalizeData(DATA);
+    localStorage.setItem('mf_v4',JSON.stringify(DATA));
+  }catch(e){}
+}
 
 /* ══ 💾 SAVE TO FILE ══ */
 function saveToFile(){
@@ -884,7 +911,7 @@ function renderAll(){renderGestor();if(document.getElementById('tab-timeline').c
   const saved=localStorage.getItem('mf_theme');
   const prefersDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
   if(saved==='dark'||((!saved)&&prefersDark)){document.documentElement.classList.replace('light','dark');document.getElementById('themeChk').checked=true;}
-  loadData();renderGestor();
+  loadData();persist();renderGestor();
   setTimeout(()=>{const td=new Date().getDate();const w=document.getElementById('tlWrap');if(w)w.scrollTo({left:Math.max(0,dx(td)-180),behavior:'smooth'});},700);
 })();
 </script>
